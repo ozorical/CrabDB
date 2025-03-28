@@ -1,4 +1,4 @@
-import { world, ScoreboardObjective, ScoreboardIdentity } from '@minecraft/server';
+import { world, ScoreboardObjective, ScoreboardIdentity } from "@minecraft/server";
 
 export class Database<T extends any> {
   /**
@@ -56,12 +56,12 @@ export class Database<T extends any> {
    */
   private encrypt(str: string): string {
     return str
-      .split('')
+      .split("")
       .map((char) => {
         const code = char.charCodeAt(0);
         return String.fromCharCode(code + this.ENCRYPTION_KEY);
       })
-      .join('');
+      .join("");
   }
 
   /**
@@ -71,12 +71,12 @@ export class Database<T extends any> {
    */
   private decrypt(str: string): string {
     return str
-      .split('')
+      .split("")
       .map((char) => {
         const code = char.charCodeAt(0);
         return String.fromCharCode(code - this.ENCRYPTION_KEY);
       })
-      .join('');
+      .join("");
   }
 
   /**
@@ -85,9 +85,10 @@ export class Database<T extends any> {
    */
   private fetch(): { [key: string]: T } {
     const participants = this.objective.getParticipants();
+    console.warn(this.objective.displayName);
     if (participants.length === 0) return {};
 
-    let collectedData = '';
+    let collectedData = "";
     participants.forEach((participant) => {
       const score = this.objective.getScore(participant);
       if (score !== undefined) {
@@ -315,8 +316,3 @@ export class Database<T extends any> {
     return null; // value not found in object
   }
 }
-
-export const TABLES = {
-  test: new Database<any>("test"),
-  example: new Database<any>("example"),
-};
